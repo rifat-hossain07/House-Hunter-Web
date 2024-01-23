@@ -20,6 +20,7 @@ const Login = () => {
     const res = await axios.post("http://localhost:5000/jwt", users);
     if (res.data.token) {
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("email", email);
       toast("Successfully! Logged In!");
       navigate(location?.state ? location.state : "/");
       setEmail(email);

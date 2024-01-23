@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { context } from "./ContextProvider/Provider";
+import { toast } from "react-toastify";
 
 const customStyles = {
   content: {
@@ -20,6 +22,8 @@ const customStyles = {
 
 const Rooms = ({ Room }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const { user } = useContext(context);
+  const navigate = useNavigate();
   function openModal() {
     setIsOpen(true);
   }
@@ -27,8 +31,30 @@ const Rooms = ({ Room }) => {
     setIsOpen(false);
   }
   const handleBook = async (Room) => {
-    const res = await axios.put(`http://localhost:5000/book/${Room?._id}`);
-    console.log(res);
+    if (!user) {
+      navigate("/login");
+      toast("Please Login First!");
+      return;
+    }
+    const bookedRoom = {
+      email: user?.email,
+      name: user?.name,
+      phone: user?.phone,
+      room: Room?.name,
+      address: Room?.address,
+      rent: Room?.rentPerMonth,
+      size: Room?.size,
+      bedroom: Room?.bedrooms,
+      bath: Room?.bathrooms,
+      hostPhone: Room?.phoneNumber,
+    };
+    const res = await axios.put(
+      `http://localhost:5000/book/${Room?._id}`,
+      bookedRoom
+    );
+    if (res.data.modifiedCount) {
+      toast("Successfully booked room!");
+    }
   };
   return (
     <div>

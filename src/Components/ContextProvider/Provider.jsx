@@ -12,32 +12,14 @@ import { createContext, useEffect, useState } from "react";
 export const context = createContext(null);
 
 const Provider = ({ children }) => {
-  const [email, setEmail] = useState(null);
+  const storedEmail = localStorage.getItem("email");
+  const [email, setEmail] = useState(storedEmail || null);
   const [user, setUser] = useState(null);
-  // const [loading, setLoading] = useState(true);
-
-  // const createUser = (email, password) => {
-  //   setLoading(true);
-  //   return createUserWithEmailAndPassword(auth, email, password);
-  // };
-
-  // const logInUser = (email, password) => {
-  //   setLoading(true);
-  //   return signInWithEmailAndPassword(auth, email, password);
-  // };
-
-  // const googleLogIn = () => {
-  //   setLoading(true);
-  //   return signInWithPopup(auth, provider);
-  // };
-
-  // const logOutUser = () => {
-  //   setLoading(true);
-  //   return signOut(auth);
-  // };
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios.get(`http://localhost:5000/users/${email}`).then((res) => {
       setUser(res.data);
+      setLoading(false);
     });
   }, [email]);
 
@@ -46,6 +28,7 @@ const Provider = ({ children }) => {
     setEmail,
     user,
     setUser,
+    loading,
   };
   return <context.Provider value={authInfo}>{children}</context.Provider>;
 };

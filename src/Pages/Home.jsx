@@ -32,8 +32,16 @@ const Home = () => {
   };
   return (
     <div>
-      {/* header */}
-      <div></div>
+      {/* Search */}
+      <div className="my-5 flex justify-center mx-16">
+        <input
+          type="text"
+          name="name"
+          placeholder="Search by name"
+          className="input input-bordered input-warning w-full "
+        />
+        <input type="submit" value="Search" className="btn btn-outline mx-2" />
+      </div>
       {/* Rooms */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 mx-12 gap-5">
         {rooms?.map((Room) => (
@@ -41,8 +49,10 @@ const Home = () => {
         ))}
       </div>
       {/* Pagination */}
-      <div className="flex justify-center mb-5">
-        <button onClick={handlePrevPage}>Prev</button>
+      <div className="flex justify-center my-5 gap-2">
+        <button className="btn" onClick={handlePrevPage}>
+          Prev
+        </button>
         {pages.map((page) => (
           <button
             onClick={() => setCurrentPage(page)}
@@ -56,7 +66,9 @@ const Home = () => {
             {page + 1}
           </button>
         ))}
-        <button onClick={handleNextPage}>Next</button>
+        <button className="btn " onClick={handleNextPage}>
+          Next
+        </button>
       </div>
     </div>
   );
