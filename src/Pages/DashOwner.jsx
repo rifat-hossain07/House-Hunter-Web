@@ -82,7 +82,7 @@ const DashOwner = () => {
       room
     );
     if (res.data) {
-      toast(`Your added successfully !`);
+      toast(`Room added successfully !`);
       refetch();
       setIsOpen(false);
     }

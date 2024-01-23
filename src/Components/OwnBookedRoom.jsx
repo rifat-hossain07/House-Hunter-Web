@@ -15,7 +15,6 @@ const OwnBookedRoom = () => {
       return res.data;
     },
   });
-  console.log(bookedRoom);
   return (
     <div>
       {bookedRoom?.length < 1 ? (

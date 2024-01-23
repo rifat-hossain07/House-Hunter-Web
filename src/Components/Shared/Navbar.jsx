@@ -72,7 +72,12 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <NavLink className="btn btn-ghost" to="/login">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? " bg-orange-400 btn btn-ghost" : "btn btn-ghost"
+            }
+            to="/login"
+          >
             Login
           </NavLink>
         )}

@@ -51,8 +51,12 @@ const Table = ({ room, index, refetch }) => {
     setIsOpen2(false);
   }
   const handleUpdateHouse = async (data) => {
-    const name = data.name;
     const phoneNumber = data.phoneNumber;
+    if (/^(?:\+88)?01[3-9]\d{8}$/.test(phoneNumber) === false) {
+      toast("Only Bangladeshi numbers are allowed!");
+      return;
+    }
+    const name = data.name;
     const photo = data.photo;
     const description = data.description;
     const availabilityDate = data.availabilityDate;
