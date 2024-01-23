@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { context } from "../Components/ContextProvider/Provider";
@@ -31,11 +30,7 @@ const Login = () => {
 
   return (
     <div>
-      <Helmet>
-        {/* <link rel="icon" href={homeFav} type="image/x-icon" /> */}
-        <title>Login</title>
-      </Helmet>
-      <div className="hero min-h-screen bg-orange-400">
+      <div className="hero min-h-screen bg-orange-400 ">
         <div className="hero-content flex-col ">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold text-white">Login now!</h1>
@@ -78,7 +73,7 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn bg-orange-500  text-white hover:text-black hover:bg-white normal-case">
+                <button className="btn bg-orange-400 border-none  text-white hover:text-black hover:bg-white normal-case">
                   Login
                 </button>
               </div>

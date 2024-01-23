@@ -145,7 +145,7 @@ const Registration = () => {
                     </span>
                   </Link>
                 </p>
-                <button className="btn bg-orange-500 text-white hover:text-black hover:bg-white normal-case ">
+                <button className="btn bg-orange-400 border-none text-white hover:text-black hover:bg-white normal-case ">
                   Register
                 </button>
               </div>

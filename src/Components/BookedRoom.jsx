@@ -27,7 +27,6 @@ const BookedRoom = ({ Room, refetch }) => {
   function closeModal() {
     setIsOpen(false);
   }
-  console.log(Room);
   const handleDelete = async (Room) => {
     const res = await axios.put("http://localhost:5000/roomDelete", Room);
     if (res.data.deletedCount) {
@@ -38,7 +37,7 @@ const BookedRoom = ({ Room, refetch }) => {
   };
   return (
     <div>
-      <div className="card lg:card-side bg-base-100 shadow-xl m-10 ">
+      <div className="card lg:card-side bg-base-100 shadow-xl mx-10 mt-5  ">
         <div className="lg:w-1/2">
           <img src={Room?.photo} alt="Album" />
         </div>
@@ -68,7 +67,10 @@ const BookedRoom = ({ Room, refetch }) => {
             {Room?.hostPhone}
           </p>
           <div className="card-actions justify-end">
-            <button onClick={openModal} className="btn btn-warning">
+            <button
+              onClick={openModal}
+              className="btn bg-orange-300 border-none"
+            >
               Delete
             </button>
           </div>
@@ -83,7 +85,22 @@ const BookedRoom = ({ Room, refetch }) => {
         contentLabel="Room Modal"
       >
         <div className="card-actions justify-end">
-          <button onClick={closeModal}>close</button>
+          <div onClick={closeModal} className=" btn btn-circle btn-outline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </div>
         <div className="text-center my-10">
           <p className="font-bold text-2xl">Are You Sure?</p>
@@ -92,14 +109,14 @@ const BookedRoom = ({ Room, refetch }) => {
         <div className="flex justify-evenly">
           <div>
             <button
-              className="btn-warning btn-sm md:btn  bg-yellow-400"
+              className="btn btn-sm  bg-orange-300 border-none"
               onClick={() => handleDelete(Room)}
             >
               Yes Delete!
             </button>
           </div>
           <div>
-            <button className="btn-sm md:btn btn-outline" onClick={closeModal}>
+            <button className="btn btn-sm btn-outline" onClick={closeModal}>
               Cancel
             </button>
           </div>

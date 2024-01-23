@@ -105,14 +105,30 @@ const Table = ({ room, index, refetch }) => {
       <td className="border border-y-black">{room?.phoneNumber}</td>
       <td className="border border-y-black">{room?.availabilityDate}</td>
       <td className="border border-y-black">
-        <button onClick={openModal} className="btn btn-sm btn-warning">
+        <button
+          onClick={openModal}
+          className="btn btn-sm bg-orange-300 border-none"
+        >
           Edit
         </button>
       </td>
       <td className="border border-y-black">
-        <button onClick={openModal2} className="btn btn-sm btn-error">
-          Delete
-        </button>
+        <div onClick={openModal2} className=" btn btn-circle btn-sm btn-error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
       </td>
       {/* Delete Confirm Modal */}
       <Modal
@@ -124,23 +140,38 @@ const Table = ({ room, index, refetch }) => {
         contentLabel="Room Modal"
       >
         <div className="card-actions justify-end">
-          <button onClick={closeModal2}>close</button>
+          <div onClick={closeModal2} className=" btn btn-circle btn-outline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </div>
-        <div className="text-center my-10">
+        <div className="text-center my-5">
           <p className="font-bold text-2xl">Are You Sure?</p>
           <p className="text-lg">You will not able to revert this later</p>
         </div>
         <div className="flex justify-evenly">
           <div>
             <button
-              className="btn-warning btn-sm md:btn  bg-yellow-400"
+              className="btn btn-sm  bg-orange-300 border-none"
               onClick={handleDelete}
             >
               Yes Delete!
             </button>
           </div>
           <div>
-            <button className="btn-sm md:btn btn-outline" onClick={closeModal2}>
+            <button className="btn btn-sm btn-outline" onClick={closeModal2}>
               Cancel
             </button>
           </div>
@@ -154,7 +185,22 @@ const Table = ({ room, index, refetch }) => {
         contentLabel="add house Modal"
       >
         <div className="card-actions justify-end">
-          <button onClick={closeModal}>close</button>
+          <div onClick={closeModal} className=" btn btn-circle btn-outline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </div>
         <div>
           <form onSubmit={handleSubmit(handleUpdateHouse)} className="">
@@ -179,7 +225,7 @@ const Table = ({ room, index, refetch }) => {
                   <span className="label-text">Phone</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   defaultValue={room?.phoneNumber}
                   placeholder="Number Here..."
                   className="input input-bordered"
@@ -315,7 +361,7 @@ const Table = ({ room, index, refetch }) => {
             </div>
 
             <div className="form-control mt-12 text-center flex-row justify-evenly">
-              <button className="btn btn-warning">Update</button>
+              <button className="btn bg-orange-300 border-none">Update</button>
               <button className="btn btn-outline" onClick={closeModal}>
                 Close
               </button>

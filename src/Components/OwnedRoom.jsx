@@ -5,8 +5,8 @@ const OwnedRoom = ({ Rooms, refetch }) => {
     <div className="overflow-auto h-[500px]  ">
       <table className="table table-pin-rows z-0 ">
         {/* head */}
-        <thead className="divide-y divide-gray-200  text-black">
-          <tr>
+        <thead className="divide-y divide-gray-200   text-black">
+          <tr className="bg-orange-300">
             <th className="border border-black">#</th>
             <th className="border border-black">Name</th>
             <th className="border border-black">Address</th>

@@ -20,7 +20,7 @@ const customStyles = {
   },
 };
 
-const Rooms = ({ Room, refetch }) => {
+const Rooms = ({ Room }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const { user } = useContext(context);
   const navigate = useNavigate();
@@ -67,13 +67,17 @@ const Rooms = ({ Room, refetch }) => {
       bookedRoom
     );
     if (res.data.modifiedCount) {
-      refetch();
+      {
+        user?.role === "House Owner"
+          ? navigate("/dash-own")
+          : navigate("/dash-rent");
+      }
       toast("Successfully booked room!");
     }
   };
   return (
     <div>
-      <Link onClick={openModal} className="card  bg-base-100 shadow-xl">
+      <Link onClick={openModal} className="card  bg-slate-100 shadow-xl">
         <figure>
           <img src={Room?.photo} alt="Shoes" />
         </figure>
@@ -86,7 +90,7 @@ const Rooms = ({ Room, refetch }) => {
           <div className="flex flex-wrap">
             <p>
               <span className="font-semibold">Size: </span>
-              {Room?.roomSize}
+              {Room?.roomSize} sqfts
             </p>
             <p>
               <span className="font-semibold">Rent: </span>
@@ -103,7 +107,22 @@ const Rooms = ({ Room, refetch }) => {
         contentLabel="Room Modal"
       >
         <div className="card-actions justify-end">
-          <button onClick={closeModal}>close</button>
+          <div onClick={closeModal} className=" btn btn-circle btn-outline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </div>
         <div className="card md:card-side ">
           <figure>
@@ -119,7 +138,7 @@ const Rooms = ({ Room, refetch }) => {
             <div className="flex w-full">
               <p className="w-1/2">
                 <span className="font-semibold">Size: </span>
-                {Room?.roomSize}
+                {Room?.roomSize} sqfts
               </p>
               <p className="w-1/2">
                 <span className="font-semibold">Date: </span>
@@ -150,7 +169,7 @@ const Rooms = ({ Room, refetch }) => {
               {Room?.status === "available" ? (
                 <button
                   onClick={() => handleBook(Room)}
-                  className="btn btn-warning"
+                  className="btn bg-orange-300 border-none"
                 >
                   Book Now
                 </button>

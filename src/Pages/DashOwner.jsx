@@ -12,7 +12,7 @@ import OwnBookedRoom from "../Components/OwnBookedRoom";
 
 const DashOwner = () => {
   const { user } = useContext(context);
-  const [showBook, setShowBook] = useState(false);
+  const [showBook, setShowBook] = useState(true);
   const [modalIsOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm();
   const customStyles = {
@@ -46,8 +46,12 @@ const DashOwner = () => {
     },
   });
   const handleAddHouse = async (data) => {
-    const name = data.name;
     const phoneNumber = data.phoneNumber;
+    if (/^(?:\+88)?01[3-9]\d{8}$/.test(phoneNumber) === false) {
+      toast("Only Bangladeshi numbers are allowed!");
+      return;
+    }
+    const name = data.name;
     const photo = data.photo;
     const description = data.description;
     const availabilityDate = data.availabilityDate;
@@ -148,12 +152,12 @@ const DashOwner = () => {
             <div className="flex justify-center">
               <button
                 onClick={openModal}
-                className="btn btn-wide btn-warning text-lg "
+                className="btn btn-wide bg-orange-300 border-none text-lg "
               >
                 Add New House
               </button>
             </div>
-            <div className="my-5">
+            <div className="py-5">
               <OwnedRoom Rooms={Rooms} refetch={refetch} />
             </div>
           </>
@@ -167,7 +171,22 @@ const DashOwner = () => {
         contentLabel="add house Modal"
       >
         <div className="card-actions justify-end">
-          <button onClick={closeModal}>close</button>
+          <div onClick={closeModal} className=" btn btn-circle btn-outline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </div>
         <div>
           <form onSubmit={handleSubmit(handleAddHouse)} className="">
@@ -191,7 +210,7 @@ const DashOwner = () => {
                   <span className="label-text">Phone</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Number Here..."
                   className="input input-bordered"
                   required
@@ -270,13 +289,22 @@ const DashOwner = () => {
                 <label className="label">
                   <span className="label-text">City</span>
                 </label>
-                <input
-                  type="text"
-                  placeholder="City Here..."
+                <select
                   className="input input-bordered"
                   required
+                  name="city"
+                  id=""
                   {...register("city")}
-                />
+                >
+                  <option>Dhaka </option>
+                  <option>Chattogram </option>
+                  <option>Khulna </option>
+                  <option>Rajshahi </option>
+                  <option>Barishal </option>
+                  <option>Sylhet </option>
+                  <option>Rangpur </option>
+                  <option>Mymensingh </option>
+                </select>
               </div>
               {/* Bedroom */}
               <div className="form-control">
@@ -317,7 +345,7 @@ const DashOwner = () => {
             </div>
 
             <div className="form-control mt-12 text-center flex-row justify-evenly">
-              <button className="btn btn-warning">Add</button>
+              <button className="btn bg-orange-300 border-none">Add</button>
               <button className="btn btn-outline" onClick={closeModal}>
                 Close
               </button>

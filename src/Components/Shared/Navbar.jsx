@@ -11,13 +11,16 @@ const Navbar = () => {
     location.reload();
   };
   return (
-    <div className="navbar ">
+    <div className="navbar bg-orange-300 ">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/" className="font-bold md:ml-5">
           House Hunter
         </Link>
       </div>
       <div className="flex-none">
+        <NavLink className="btn btn-ghost" to="/">
+          Home
+        </NavLink>
         {user && (
           <>
             {user?.role === "House Owner" ? (

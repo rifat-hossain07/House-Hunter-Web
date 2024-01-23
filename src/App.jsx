@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
-    <div>
+    <div className="bg-orange-200">
       <Navbar />
       <Outlet />
       <ToastContainer />
