@@ -58,7 +58,7 @@ const Home = () => {
             onClick={() => setCurrentPage(page)}
             className={
               currentPage === page
-                ? "bg-red-400 btn btn-outline"
+                ? "bg-orange-400 btn btn-outline"
                 : "btn btn-outline"
             }
             key={page}

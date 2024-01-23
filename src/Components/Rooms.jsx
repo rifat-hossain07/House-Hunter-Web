@@ -36,6 +36,18 @@ const Rooms = ({ Room, refetch }) => {
       toast("Please Login First!");
       return;
     }
+    const checkForRoom = await axios.get(
+      `http://localhost:5000/booked?email=${user?.email}`
+    );
+    if (checkForRoom?.data?.length >= 2) {
+      {
+        user?.role === "House Owner"
+          ? navigate("/dash-own")
+          : navigate("/dash-rent");
+      }
+      toast("Your Booking Limit is over");
+      return;
+    }
     const bookedRoom = {
       email: user?.email,
       name: user?.name,

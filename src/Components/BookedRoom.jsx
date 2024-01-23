@@ -36,42 +36,48 @@ const BookedRoom = ({ Room, refetch }) => {
   };
   return (
     <div>
-      <div className="card lg:card-side bg-base-100 shadow-xl m-10 ">
-        <div className="lg:w-1/2">
-          <img src={Room?.photo} alt="Album" />
-        </div>
-        <div className="card-body lg:w-1/2">
-          <h2 className="card-title">{Room?.room}</h2>
-          <p>
-            <span className="font-semibold">Address: </span>
-            {Room?.address}
-          </p>
-          <p>{Room?.description}</p>
-          <div className="flex w-full">
-            <p className="w-1/2">
-              <span className="font-semibold">Bedrooms: </span>
-              {Room?.bedroom}
-            </p>
-            <p className="w-1/2">
-              <span className="font-semibold">Bathrooms: </span>
-              {Room?.bath}
-            </p>
+      {Room ? (
+        <div className="card lg:card-side bg-base-100 shadow-xl m-10 ">
+          <div className="lg:w-1/2">
+            <img src={Room?.photo} alt="Album" />
           </div>
-          <p className="">
-            <span className="font-semibold">Rent: </span>
-            {Room?.rent}/= per month
-          </p>
-          <p className="">
-            <span className="font-semibold">Host Phone: </span>
-            {Room?.hostPhone}
-          </p>
-          <div className="card-actions justify-end">
-            <button onClick={openModal} className="btn btn-warning">
-              Delete
-            </button>
+          <div className="card-body lg:w-1/2">
+            <h2 className="card-title">{Room?.room}</h2>
+            <p>
+              <span className="font-semibold">Address: </span>
+              {Room?.address}
+            </p>
+            <p>{Room?.description}</p>
+            <div className="flex w-full">
+              <p className="w-1/2">
+                <span className="font-semibold">Bedrooms: </span>
+                {Room?.bedroom}
+              </p>
+              <p className="w-1/2">
+                <span className="font-semibold">Bathrooms: </span>
+                {Room?.bath}
+              </p>
+            </div>
+            <p className="">
+              <span className="font-semibold">Rent: </span>
+              {Room?.rent}/= per month
+            </p>
+            <p className="">
+              <span className="font-semibold">Host Phone: </span>
+              {Room?.hostPhone}
+            </p>
+            <div className="card-actions justify-end">
+              <button onClick={openModal} className="btn btn-warning">
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center text-2xl my-10 text-red-500 font-bold">
+          <p>No Bookings yet</p>
+        </div>
+      )}
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}
