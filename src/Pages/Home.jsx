@@ -1,22 +1,22 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Rooms from "../Components/Rooms";
 import { useLoaderData } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const Home = () => {
-  const [rooms, setRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const Total = useLoaderData();
   const itemPerPage = 10;
-  useEffect(() => {
-    axios
-      .get(
+  const { data: rooms, refetch } = useQuery({
+    queryKey: [currentPage, "AllRoom"],
+    queryFn: async () => {
+      const res = await axios.get(
         `http://localhost:5000/rooms?page=${currentPage}&size=${itemPerPage}`
-      )
-      .then((res) => {
-        setRooms(res.data);
-      });
-  }, [currentPage]);
+      );
+      return res.data;
+    },
+  });
   const numberOfPages = Math.ceil(Total.count / 10);
   const pages = [...Array(numberOfPages).keys()];
   const handlePrevPage = () => {
@@ -45,7 +45,7 @@ const Home = () => {
       {/* Rooms */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 mx-12 gap-5">
         {rooms?.map((Room) => (
-          <Rooms key={Room?._id} Room={Room} />
+          <Rooms key={Room?._id} Room={Room} refetch={refetch} />
         ))}
       </div>
       {/* Pagination */}

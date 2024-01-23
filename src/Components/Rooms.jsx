@@ -20,7 +20,7 @@ const customStyles = {
   },
 };
 
-const Rooms = ({ Room }) => {
+const Rooms = ({ Room, refetch }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const { user } = useContext(context);
   const navigate = useNavigate();
@@ -47,12 +47,15 @@ const Rooms = ({ Room }) => {
       bedroom: Room?.bedrooms,
       bath: Room?.bathrooms,
       hostPhone: Room?.phoneNumber,
+      photo: Room?.photo,
+      description: Room?.description,
     };
     const res = await axios.put(
       `http://localhost:5000/book/${Room?._id}`,
       bookedRoom
     );
     if (res.data.modifiedCount) {
+      refetch();
       toast("Successfully booked room!");
     }
   };
