@@ -51,9 +51,15 @@ const DashRent = () => {
         </div>
       </div>
       <div>
-        {bookedRoom?.map((Room) => (
-          <BookedRoom key={Room?._id} Room={Room} refetch={refetch} />
-        ))}
+        {bookedRoom?.length < 1 ? (
+          <div className="flex justify-center text-2xl my-10 text-red-500 font-bold">
+            <p>No Bookings yet</p>
+          </div>
+        ) : (
+          bookedRoom?.map((Room) => (
+            <BookedRoom key={Room?._id} Room={Room} refetch={refetch} />
+          ))
+        )}
       </div>
     </div>
   );

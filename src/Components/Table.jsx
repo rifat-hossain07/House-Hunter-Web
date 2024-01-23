@@ -1,19 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
-import { context } from "../Components/ContextProvider/Provider";
-import Header from "../Components/Header";
-import OwnedRoom from "../Components/OwnedRoom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Modal from "react-modal";
 import { useForm } from "react-hook-form";
+import Modal from "react-modal";
+import { context } from "./ContextProvider/Provider";
+import axios from "axios";
 import { toast } from "react-toastify";
-import OwnBookedRoom from "../Components/OwnBookedRoom";
-// import { toast } from "react-toastify";
-
-const DashOwner = () => {
+const Table = ({ room, index, refetch }) => {
   const { user } = useContext(context);
-  const [showBook, setShowBook] = useState(false);
+
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modal2IsOpen, setIsOpen2] = useState(false);
   const { register, handleSubmit } = useForm();
   const customStyles = {
     content: {
@@ -29,23 +25,32 @@ const DashOwner = () => {
       transform: "translate(-50%, -50%)",
     },
   };
+  const customStyles2 = {
+    content: {
+      content: "center",
+      height: "40%",
+      width: "50%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
   function openModal() {
     setIsOpen(true);
   }
   function closeModal() {
     setIsOpen(false);
   }
-
-  const { data: Rooms, refetch } = useQuery({
-    queryKey: [user?.email, "RoomsTable"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `http://localhost:5000/ownRoom?email=${user?.email}`
-      );
-      return res.data;
-    },
-  });
-  const handleAddHouse = async (data) => {
+  function openModal2() {
+    setIsOpen2(true);
+  }
+  function closeModal2() {
+    setIsOpen2(false);
+  }
+  const handleUpdateHouse = async (data) => {
     const name = data.name;
     const phoneNumber = data.phoneNumber;
     const photo = data.photo;
@@ -58,7 +63,8 @@ const DashOwner = () => {
     const bedrooms = data.bedrooms;
     const roomSize = data.roomSize;
     const email = user?.email;
-    const room = {
+    const house = {
+      id: room?._id,
       name,
       phoneNumber,
       photo,
@@ -72,96 +78,77 @@ const DashOwner = () => {
       roomSize,
       email,
     };
-    console.log(room);
-    const res = await axios.post(`http://localhost:5000/roomsAdd`, room);
+    const res = await axios.put(`http://localhost:5000/updateRoom`, house);
     if (res.data) {
-      toast(`Your added successfully !`);
       refetch();
+      toast(`Updated successfully !`);
       setIsOpen(false);
     }
   };
+  const handleDelete = async () => {
+    const res = await axios.put(`http://localhost:5000/ownDelete/${room?._id}`);
+    if (res.data.deletedCount) {
+      refetch();
+      toast("Deleted Successfully !");
+      setIsOpen2(false);
+    }
+  };
   return (
-    <div>
-      {/* Header */}
-      <div>
-        <div
-        // data-aos="fade-down" data-aos-duration="1000"
-        >
-          <Header text={`Welcome ${user?.name}`} />
+    <tr key={room?._id}>
+      <td className="border border-y-black">{index + 1}</td>
+      <td className="border border-y-black">{room?.name}</td>
+      <td className="border border-y-black">{room?.address}</td>
+      <td className="border border-y-black">{room?.bedrooms}</td>
+      <td className="border border-y-black">{room?.bathrooms}</td>
+      <td className="border border-y-black">{room?.roomSize}</td>
+      <td className="border border-y-black">{room?.rentPerMonth}</td>
+      <td className="border border-y-black">{room?.phoneNumber}</td>
+      <td className="border border-y-black">{room?.availabilityDate}</td>
+      <td className="border border-y-black">
+        <button onClick={openModal} className="btn btn-sm btn-warning">
+          Edit
+        </button>
+      </td>
+      <td className="border border-y-black">
+        <button onClick={openModal2} className="btn btn-sm btn-error">
+          Delete
+        </button>
+      </td>
+      {/* Delete Confirm Modal */}
+      <Modal
+        isOpen={modal2IsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal2}
+        style={customStyles2}
+        s
+        contentLabel="Room Modal"
+      >
+        <div className="card-actions justify-end">
+          <button onClick={closeModal2}>close</button>
         </div>
-        <div
-          // data-aos="flip-left"
-          // data-aos-duration="1000"
-          className="flex flex-col lg:flex-row-reverse items-center text-center lg:text-left justify-center mx-auto w-1/2 rounded-xl bg-orange-300 p-4 text-black shadow-lg "
-        >
-          <div className="mx-5">
-            <img
-              className="w-40 bg-slate-300 shadow-lg shadow-orange-200 mx-auto rounded-xl"
-              src={user?.photo}
-              alt="https://i.ibb.co/N1nwWNp/a.png"
-            />
+        <div className="text-center my-10">
+          <p className="font-bold text-2xl">Are You Sure?</p>
+          <p className="text-lg">You will not able to revert this later</p>
+        </div>
+        <div className="flex justify-evenly">
+          <div>
+            <button
+              className="btn-warning btn-sm md:btn  bg-yellow-400"
+              onClick={handleDelete}
+            >
+              Yes Delete!
+            </button>
           </div>
-          <div className="md:text-2xl">
-            <h2>
-              <span className=" font-medium  underline">Name: </span>
-              {user?.name}
-            </h2>
-            <h2>
-              <span className=" font-medium underline">E-mail: </span>
-              {user?.email}
-            </h2>
+          <div>
+            <button className="btn-sm md:btn btn-outline" onClick={closeModal2}>
+              Cancel
+            </button>
           </div>
         </div>
-      </div>
-      {/* Navbar */}
-      <div className="flex justify-center items-center text-lg md:text-2xl">
-        <p
-          className={
-            !showBook
-              ? "link link-hover text-orange-400 underline"
-              : "link link-hover"
-          }
-          onClick={() => setShowBook(false)}
-        >
-          Owned
-        </p>
-        <div className="divider lg:divider-horizontal">|</div>
-        <p
-          className={
-            showBook
-              ? "link link-hover text-orange-400 underline"
-              : "link link-hover"
-          }
-          onClick={() => setShowBook(true)}
-        >
-          Bookings
-        </p>
-      </div>
-      {/* Bookings and Owned */}
-      <div>
-        {showBook ? (
-          <>
-            <OwnBookedRoom />
-          </>
-        ) : (
-          <>
-            <div className="flex justify-center">
-              <button
-                onClick={openModal}
-                className="btn btn-wide btn-warning text-lg "
-              >
-                Add New House
-              </button>
-            </div>
-            <div className="my-5">
-              <OwnedRoom Rooms={Rooms} refetch={refetch} />
-            </div>
-          </>
-        )}
-      </div>
+      </Modal>
+      {/* Update Modal */}
       <Modal
         isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="add house Modal"
@@ -170,7 +157,7 @@ const DashOwner = () => {
           <button onClick={closeModal}>close</button>
         </div>
         <div>
-          <form onSubmit={handleSubmit(handleAddHouse)} className="">
+          <form onSubmit={handleSubmit(handleUpdateHouse)} className="">
             <div className="flex flex-col lg:flex-row  gap-2">
               {/* Name */}
               <div className="form-control  lg:w-1/3">
@@ -178,6 +165,7 @@ const DashOwner = () => {
                   <span className="label-text">Name</span>
                 </label>
                 <input
+                  defaultValue={room?.name}
                   type="text"
                   placeholder="Name Here..."
                   className="input input-bordered"
@@ -192,6 +180,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={room?.phoneNumber}
                   placeholder="Number Here..."
                   className="input input-bordered"
                   required
@@ -205,6 +194,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={room?.photo}
                   placeholder="Photo Link "
                   className="input input-bordered"
                   {...register("photo")}
@@ -218,6 +208,7 @@ const DashOwner = () => {
               </label>
               <textarea
                 type="text"
+                defaultValue={room?.description}
                 placeholder="Description"
                 className="textarea textarea-bordered md:textarea-lg w-full "
                 {...register("description")}
@@ -231,6 +222,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="date"
+                  defaultValue={room?.availabilityDate}
                   placeholder="available"
                   className="input input-bordered"
                   required
@@ -244,6 +236,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={room?.address}
                   placeholder="Address Here..."
                   className="input input-bordered"
                   required
@@ -257,6 +250,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={room?.rentPerMonth}
                   placeholder="Rent "
                   className="input input-bordered"
                   required
@@ -272,6 +266,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={room?.city}
                   placeholder="City Here..."
                   className="input input-bordered"
                   required
@@ -285,6 +280,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={room?.bedrooms}
                   placeholder="Bedrooms "
                   className="input input-bordered"
                   {...register("bedrooms")}
@@ -297,6 +293,7 @@ const DashOwner = () => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={room?.bathrooms}
                   placeholder="Bathrooms "
                   className="input input-bordered"
                   {...register("bathrooms")}
@@ -308,7 +305,8 @@ const DashOwner = () => {
                   <span className="label-text">Size in sqft</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  defaultValue={room?.roomSize}
                   placeholder="Size "
                   className="input input-bordered"
                   {...register("roomSize")}
@@ -317,7 +315,7 @@ const DashOwner = () => {
             </div>
 
             <div className="form-control mt-12 text-center flex-row justify-evenly">
-              <button className="btn btn-warning">Add</button>
+              <button className="btn btn-warning">Update</button>
               <button className="btn btn-outline" onClick={closeModal}>
                 Close
               </button>
@@ -325,8 +323,8 @@ const DashOwner = () => {
           </form>
         </div>
       </Modal>
-    </div>
+    </tr>
   );
 };
 
-export default DashOwner;
+export default Table;

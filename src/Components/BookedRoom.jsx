@@ -18,6 +18,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
+
 const BookedRoom = ({ Room, refetch }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   function openModal() {
@@ -26,6 +27,7 @@ const BookedRoom = ({ Room, refetch }) => {
   function closeModal() {
     setIsOpen(false);
   }
+  console.log(Room);
   const handleDelete = async (Room) => {
     const res = await axios.put("http://localhost:5000/roomDelete", Room);
     if (res.data.deletedCount) {
@@ -36,48 +38,43 @@ const BookedRoom = ({ Room, refetch }) => {
   };
   return (
     <div>
-      {Room ? (
-        <div className="card lg:card-side bg-base-100 shadow-xl m-10 ">
-          <div className="lg:w-1/2">
-            <img src={Room?.photo} alt="Album" />
+      <div className="card lg:card-side bg-base-100 shadow-xl m-10 ">
+        <div className="lg:w-1/2">
+          <img src={Room?.photo} alt="Album" />
+        </div>
+        <div className="card-body lg:w-1/2">
+          <h2 className="card-title">{Room?.room}</h2>
+          <p>
+            <span className="font-semibold">Address: </span>
+            {Room?.address}
+          </p>
+          <p>{Room?.description}</p>
+          <div className="flex w-full">
+            <p className="w-1/2">
+              <span className="font-semibold">Bedrooms: </span>
+              {Room?.bedroom}
+            </p>
+            <p className="w-1/2">
+              <span className="font-semibold">Bathrooms: </span>
+              {Room?.bath}
+            </p>
           </div>
-          <div className="card-body lg:w-1/2">
-            <h2 className="card-title">{Room?.room}</h2>
-            <p>
-              <span className="font-semibold">Address: </span>
-              {Room?.address}
-            </p>
-            <p>{Room?.description}</p>
-            <div className="flex w-full">
-              <p className="w-1/2">
-                <span className="font-semibold">Bedrooms: </span>
-                {Room?.bedroom}
-              </p>
-              <p className="w-1/2">
-                <span className="font-semibold">Bathrooms: </span>
-                {Room?.bath}
-              </p>
-            </div>
-            <p className="">
-              <span className="font-semibold">Rent: </span>
-              {Room?.rent}/= per month
-            </p>
-            <p className="">
-              <span className="font-semibold">Host Phone: </span>
-              {Room?.hostPhone}
-            </p>
-            <div className="card-actions justify-end">
-              <button onClick={openModal} className="btn btn-warning">
-                Delete
-              </button>
-            </div>
+          <p className="">
+            <span className="font-semibold">Rent: </span>
+            {Room?.rent}/= per month
+          </p>
+          <p className="">
+            <span className="font-semibold">Host Phone: </span>
+            {Room?.hostPhone}
+          </p>
+          <div className="card-actions justify-end">
+            <button onClick={openModal} className="btn btn-warning">
+              Delete
+            </button>
           </div>
         </div>
-      ) : (
-        <div className="flex justify-center text-2xl my-10 text-red-500 font-bold">
-          <p>No Bookings yet</p>
-        </div>
-      )}
+      </div>
+
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}
