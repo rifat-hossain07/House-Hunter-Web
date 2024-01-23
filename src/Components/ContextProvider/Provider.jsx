@@ -17,7 +17,7 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios.get(`http://localhost:5000/users/${email}`).then((res) => {
+    axios.get(`https://hunterbackend.vercel.app/users/${email}`).then((res) => {
       setUser(res.data);
       setLoading(false);
     });

@@ -28,7 +28,10 @@ const BookedRoom = ({ Room, refetch }) => {
     setIsOpen(false);
   }
   const handleDelete = async (Room) => {
-    const res = await axios.put("http://localhost:5000/roomDelete", Room);
+    const res = await axios.put(
+      "https://hunterbackend.vercel.app/roomDelete",
+      Room
+    );
     if (res.data.deletedCount) {
       refetch();
       closeModal();

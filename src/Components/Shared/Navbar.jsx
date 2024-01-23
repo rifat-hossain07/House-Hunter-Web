@@ -18,17 +18,32 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none">
-        <NavLink className="btn btn-ghost" to="/">
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? " bg-orange-400 btn btn-ghost" : "btn btn-ghost"
+          }
+          to="/"
+        >
           Home
         </NavLink>
         {user && (
           <>
             {user?.role === "House Owner" ? (
-              <NavLink className="btn btn-ghost" to="/dash-own">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? " bg-orange-400 btn btn-ghost" : "btn btn-ghost"
+                }
+                to="/dash-own"
+              >
                 Dashboard
               </NavLink>
             ) : (
-              <NavLink className="btn btn-ghost" to="/dash-rent">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? " bg-orange-400 btn btn-ghost" : "btn btn-ghost"
+                }
+                to="/dash-rent"
+              >
                 Dashboard
               </NavLink>
             )}

@@ -37,7 +37,7 @@ const Rooms = ({ Room }) => {
       return;
     }
     const checkForRoom = await axios.get(
-      `http://localhost:5000/booked?email=${user?.email}`
+      `https://hunterbackend.vercel.app/booked?email=${user?.email}`
     );
     if (checkForRoom?.data?.length >= 2) {
       {
@@ -63,7 +63,7 @@ const Rooms = ({ Room }) => {
       description: Room?.description,
     };
     const res = await axios.put(
-      `http://localhost:5000/book/${Room?._id}`,
+      `https://hunterbackend.vercel.app/book/${Room?._id}`,
       bookedRoom
     );
     if (res.data.modifiedCount) {

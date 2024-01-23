@@ -78,7 +78,10 @@ const Table = ({ room, index, refetch }) => {
       roomSize,
       email,
     };
-    const res = await axios.put(`http://localhost:5000/updateRoom`, house);
+    const res = await axios.put(
+      `https://hunterbackend.vercel.app/updateRoom`,
+      house
+    );
     if (res.data) {
       refetch();
       toast(`Updated successfully !`);
@@ -86,7 +89,9 @@ const Table = ({ room, index, refetch }) => {
     }
   };
   const handleDelete = async () => {
-    const res = await axios.put(`http://localhost:5000/ownDelete/${room?._id}`);
+    const res = await axios.put(
+      `https://hunterbackend.vercel.app/ownDelete/${room?._id}`
+    );
     if (res.data.deletedCount) {
       refetch();
       toast("Deleted Successfully !");

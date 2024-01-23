@@ -40,7 +40,7 @@ const DashOwner = () => {
     queryKey: [user?.email, "RoomsTable"],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/ownRoom?email=${user?.email}`
+        `https://hunterbackend.vercel.app/ownRoom?email=${user?.email}`
       );
       return res.data;
     },
@@ -77,7 +77,10 @@ const DashOwner = () => {
       email,
     };
     console.log(room);
-    const res = await axios.post(`http://localhost:5000/roomsAdd`, room);
+    const res = await axios.post(
+      `https://hunterbackend.vercel.app/roomsAdd`,
+      room
+    );
     if (res.data) {
       toast(`Your added successfully !`);
       refetch();

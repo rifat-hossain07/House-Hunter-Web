@@ -33,7 +33,7 @@ const Home = () => {
       availability: form.get("available"),
       rentRange: form.get("rent"),
     };
-    const res = await axios.get("http://localhost:5000/search", {
+    const res = await axios.get("https://hunterbackend.vercel.app/search", {
       params: queryData,
     });
     setRooms(res.data);
@@ -41,7 +41,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/rooms?page=${currentPage}&size=${itemPerPage}`
+        `https://hunterbackend.vercel.app/rooms?page=${currentPage}&size=${itemPerPage}`
       )
       .then((res) => {
         setRooms(res.data);
@@ -53,7 +53,7 @@ const Home = () => {
       <div>
         <form
           onSubmit={handleSearch}
-          className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-10 md:gap-5"
+          className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-16 md:gap-5"
         >
           <div>
             {/* City */}

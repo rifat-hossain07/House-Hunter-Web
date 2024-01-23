@@ -11,7 +11,7 @@ const DashRent = () => {
     queryKey: [user?.email, "BookedRoom"],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/booked?email=${user?.email}`
+        `https://hunterbackend.vercel.app/booked?email=${user?.email}`
       );
       return res.data;
     },

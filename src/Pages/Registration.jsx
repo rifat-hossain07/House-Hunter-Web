@@ -32,7 +32,10 @@ const Registration = () => {
       return;
     }
     const users = { email, name, photo, password, role, phone };
-    const res = await axios.post("http://localhost:5000/users", users);
+    const res = await axios.post(
+      "https://hunterbackend.vercel.app/users",
+      users
+    );
     if (res.data.insertedId) {
       toast("Successfully Registered!");
       e.target.reset();
