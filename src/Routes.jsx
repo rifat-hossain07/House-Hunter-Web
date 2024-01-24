@@ -7,10 +7,12 @@ import DashOwner from "./Pages/DashOwner";
 import DashRent from "./Pages/DashRent";
 import Owner from "./Components/ProtectedRoutes/Owner";
 import Renter from "./Components/ProtectedRoutes/Renter";
+import Error from "./Components/Error";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",

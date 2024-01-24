@@ -1,8 +1,7 @@
-# React + Vite
+# House-Hunter website using React , MongoDB, ExpressJS and Node(MERN)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### House-Hunter Live Link : [https://hunter-house.surge.sh/](https://hunter-house.surge.sh/)
 
-Currently, two official plugins are available:
+### House-Hunter Backend Github : []()
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##### House-Hunter is a full stack House Renting Website, it connects house owner and renter to make rent process easier.
