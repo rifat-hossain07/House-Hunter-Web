@@ -4,4 +4,4 @@
 
 ### House-Hunter Backend Github : [https://github.com/rifat-hossain07/House-Hunter-Backend.git](https://github.com/rifat-hossain07/House-Hunter-Backend.git)
 
-##### House-Hunter is a full stack House Renting Website, it connects house owner and renter to make rent process easier.
+### House-Hunter is a full stack full functional House Renting Website, it connects house owner and renter to make rent process much easier.
